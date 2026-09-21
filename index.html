@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#16233A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Rapportino">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<link rel="icon" href="data:image/png;base64,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">
+<title>Rapportino Operai Evolplay</title>
+<style>
+:root{
+  --ground:#F2F4F7;
+  --surface:#FFFFFF;
+  --surface-2:#E8ECF2;
+  --ink:#111B2B;
+  --muted:#5A6779;
+  --line:#D3DAE4;
+  --line-strong:#AFBACB;
+  --band:#16233A;
+  --band-ink:#FFFFFF;
+  --band-dim:#93A7C6;
+  --accent:#D5860A;
+  --accent-tint:#FDF2DF;
+  --accent-ink:#3A2703;
+  --accent-strong:#8A5606;
+  --ok:#1B7A54;
+  --bad:#B3352A;
+  --bad-tint:#FBEBE9;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0A1019; --surface:#131D2B; --surface-2:#1B2636;
+    --ink:#E6ECF4; --muted:#93A4BA; --line:#28374C; --line-strong:#3B4F6C;
+    --band:#16233A; --band-ink:#FFFFFF; --band-dim:#8CA0BE;
+    --accent:#F0AD32; --accent-tint:#2A2008; --accent-ink:#171003; --accent-strong:#F0AD32;
+    --ok:#4FBF8B; --bad:#F0776A; --bad-tint:#32181A;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0A1019; --surface:#131D2B; --surface-2:#1B2636;
+  --ink:#E6ECF4; --muted:#93A4BA; --line:#28374C; --line-strong:#3B4F6C;
+  --band:#16233A; --band-ink:#FFFFFF; --band-dim:#8CA0BE;
+  --accent:#F0AD32; --accent-tint:#2A2008; --accent-ink:#171003; --accent-strong:#F0AD32;
+  --ok:#4FBF8B; --bad:#F0776A; --bad-tint:#32181A;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  background:var(--ground);color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  font-size:17px;line-height:1.45;padding-bottom:112px;
+}
+button,input,textarea,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+
+.head{background:var(--band);color:var(--band-ink);padding:calc(env(safe-area-inset-top) + 14px) 16px 14px}
+.head h1{font-size:20px;font-weight:800;letter-spacing:.06em;line-height:1.1}
+.head h1 span{color:var(--band-dim);font-weight:600}
+.head p{font-size:12.5px;color:var(--band-dim);margin-top:4px}
+
+.wrap{max-width:620px;margin:0 auto;padding:0 12px}
+
+.ripresa{
+  background:var(--accent-tint);border-bottom:2px solid var(--accent);
+  padding:11px 16px;display:flex;gap:10px;align-items:center;font-size:14px;
+}
+.ripresa span{flex:1;color:var(--accent-strong);font-weight:600}
+.ripresa button{
+  border:1.5px solid var(--accent);background:transparent;color:var(--accent-strong);
+  border-radius:8px;padding:7px 12px;font-size:13.5px;font-weight:600;cursor:pointer;flex:none;
+}
+
+.sec{margin-top:20px}
+.band{
+  background:var(--band);color:var(--band-ink);border-radius:10px 10px 0 0;
+  padding:11px 14px;display:flex;align-items:center;gap:11px;
+}
+.band b{
+  background:var(--accent);color:var(--accent-ink);width:22px;height:22px;flex:none;
+  border-radius:5px;display:grid;place-items:center;font-size:13px;font-weight:800;
+}
+.band h2{font-size:15px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;flex:1}
+.nota-sez{font-size:13.5px;color:var(--accent-strong);font-style:italic;line-height:1.35}
+.body{
+  background:var(--surface);border:1px solid var(--line);border-top:none;
+  border-radius:0 0 12px 12px;padding:14px;display:flex;flex-direction:column;gap:14px;
+}
+
+.f{display:flex;flex-direction:column;gap:6px}
+.f > label{font-size:13px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.f > label i{font-style:normal;color:var(--accent-strong)}
+.f .aiuto{font-size:13.5px;color:var(--muted);line-height:1.35}
+input[type=text],input[type=date],input[type=time],input[type=number],textarea{
+  width:100%;background:var(--surface);border:1.5px solid var(--line);border-radius:10px;
+  padding:13px;font-size:17px;
+}
+input:focus,textarea:focus{border-color:var(--accent);outline:none}
+textarea{min-height:110px;resize:vertical}
+.manca input,.manca textarea{border-color:var(--bad);background:var(--bad-tint)}
+.manca .opts .opt,.manca .commesse .cm{border-color:var(--bad)}
+.due-col{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.nd{
+  border:1.5px dashed var(--line-strong);border-radius:10px;padding:13px 8px;
+  background:var(--surface-2);color:var(--muted);font-size:14px;line-height:1.3;text-align:center;
+}
+.nd b{display:block;font-size:19px;line-height:1;margin-bottom:3px;color:var(--line-strong)}
+
+.opts{display:flex;flex-direction:column;gap:7px}
+.opt{
+  display:flex;align-items:center;gap:12px;width:100%;text-align:left;cursor:pointer;
+  background:var(--surface);border:1.5px solid var(--line);border-radius:11px;
+  padding:12px 13px;min-height:52px;
+}
+.opt .q{
+  flex:none;width:24px;height:24px;border:2px solid var(--line-strong);border-radius:6px;
+  display:grid;place-items:center;
+}
+.opt.tondo .q{border-radius:50%}
+.opt .q svg{width:15px;height:15px;opacity:0;stroke:var(--accent-ink);stroke-width:3.5;
+  fill:none;stroke-linecap:round;stroke-linejoin:round}
+.opt[aria-pressed=true]{border-color:var(--accent);background:var(--accent-tint)}
+.opt[aria-pressed=true] .q{background:var(--accent);border-color:var(--accent)}
+.opt[aria-pressed=true] .q svg{opacity:1}
+.opt .t{flex:1;font-size:16.5px;line-height:1.3}
+.opt .t small{display:block;color:var(--muted);font-size:13px;margin-top:2px}
+
+/* pastiglie nomi e mezzi */
+.pill-grid{display:flex;flex-wrap:wrap;gap:8px}
+.pill{
+  border:1.5px solid var(--line);background:var(--surface);border-radius:999px;
+  padding:11px 16px;min-height:48px;font-size:16px;cursor:pointer;display:flex;
+  align-items:center;gap:8px;
+}
+.pill[aria-pressed=true]{border-color:var(--accent);background:var(--accent-tint);font-weight:700}
+.pill .seg{
+  width:18px;height:18px;border-radius:50%;border:2px solid var(--line-strong);flex:none;
+  display:grid;place-items:center;
+}
+.pill[aria-pressed=true] .seg{background:var(--accent);border-color:var(--accent)}
+.pill .seg svg{width:11px;height:11px;opacity:0;stroke:var(--accent-ink);stroke-width:4;
+  fill:none;stroke-linecap:round;stroke-linejoin:round}
+.pill[aria-pressed=true] .seg svg{opacity:1}
+
+/* tabella ore */
+.tab{display:flex;flex-direction:column;gap:6px;margin-top:2px}
+.tab .intest{
+  display:grid;grid-template-columns:1fr 78px 78px;gap:8px;padding:0 2px;
+  font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);
+}
+.tab .intest span:not(:first-child){text-align:center}
+.tab .riga{display:grid;grid-template-columns:1fr 78px 78px;gap:8px;align-items:center}
+.tab .riga .nome{font-size:16.5px;font-weight:600}
+.tab .riga input{padding:11px 6px;text-align:center;font-variant-numeric:tabular-nums}
+.tot{
+  display:flex;justify-content:space-between;padding:10px 2px 0;border-top:1px solid var(--line);
+  margin-top:4px;font-size:14.5px;color:var(--muted);
+}
+.tot b{color:var(--ink);font-variant-numeric:tabular-nums}
+
+/* km */
+.km{display:flex;flex-direction:column;gap:6px;margin-top:2px}
+.km .riga{display:grid;grid-template-columns:1fr 104px;gap:8px;align-items:center}
+.km .riga .nome{font-size:16.5px;font-weight:600}
+.km .riga .box{display:flex;align-items:center;gap:6px}
+.km .riga input{padding:11px 6px;text-align:center;font-variant-numeric:tabular-nums}
+.km .riga .u{font-size:14px;color:var(--muted);font-weight:600}
+
+/* commesse salvate */
+.commesse{display:flex;flex-direction:column;gap:7px}
+.cm{
+  display:flex;align-items:center;gap:11px;background:var(--surface);
+  border:1.5px solid var(--line);border-radius:11px;padding:11px 12px;min-height:56px;
+}
+.cm[aria-pressed=true]{border-color:var(--accent);background:var(--accent-tint)}
+.cm .q{flex:none;width:22px;height:22px;border:2px solid var(--line-strong);border-radius:50%;
+  display:grid;place-items:center}
+.cm[aria-pressed=true] .q{background:var(--accent);border-color:var(--accent)}
+.cm .q svg{width:12px;height:12px;opacity:0;stroke:var(--accent-ink);stroke-width:4;fill:none;
+  stroke-linecap:round;stroke-linejoin:round}
+.cm[aria-pressed=true] .q svg{opacity:1}
+.cm .testo{flex:1;text-align:left;cursor:pointer;background:none;border:none;padding:0}
+.cm .testo b{display:block;font-size:16.5px;line-height:1.25}
+.cm .testo small{display:block;color:var(--muted);font-size:13.5px;margin-top:1px}
+.cm .via{
+  flex:none;width:34px;height:34px;border:none;border-radius:8px;background:var(--surface-2);
+  color:var(--muted);font-size:19px;line-height:1;cursor:pointer;
+}
+.nuovo{
+  display:flex;align-items:center;justify-content:center;gap:9px;width:100%;
+  border:2px dashed var(--line-strong);background:var(--surface);border-radius:11px;
+  padding:15px;cursor:pointer;color:var(--muted);font-size:16px;font-weight:700;
+}
+
+.barra{
+  position:fixed;left:0;right:0;bottom:0;background:var(--surface);
+  border-top:1px solid var(--line);padding:12px 12px calc(env(safe-area-inset-bottom) + 12px);
+  box-shadow:0 -3px 14px rgba(10,16,25,.10);z-index:20;
+}
+.barra .dentro{max-width:620px;margin:0 auto}
+.grande{
+  width:100%;border:none;border-radius:12px;padding:17px;min-height:58px;cursor:pointer;
+  font-size:19px;font-weight:800;letter-spacing:.03em;background:var(--accent);color:var(--accent-ink);
+}
+.grande.scuro{background:var(--band);color:var(--band-ink)}
+.grande.chiaro{background:var(--surface-2);color:var(--ink)}
+.grande[disabled]{opacity:.5}
+
+.velo{
+  position:fixed;inset:0;background:rgba(10,16,25,.55);z-index:40;
+  display:flex;align-items:flex-end;justify-content:center;padding:14px;
+}
+.foglio{
+  background:var(--surface);border-radius:16px;padding:18px;width:100%;max-width:560px;
+  max-height:82vh;overflow-y:auto;display:flex;flex-direction:column;gap:13px;
+}
+.foglio h3{font-size:19px;font-weight:800}
+.foglio .aiuto{font-size:14.5px;color:var(--muted);line-height:1.4}
+.foglio ul{list-style:none;display:flex;flex-direction:column;gap:7px}
+.foglio li{
+  font-size:15.5px;padding:10px 12px;background:var(--surface-2);border-radius:8px;
+  border-left:3px solid var(--bad);cursor:pointer;
+}
+.foglio .riga2{display:flex;gap:9px}
+.foglio .riga2 .grande{flex:1;font-size:16.5px;padding:14px;min-height:52px}
+.esito{
+  display:flex;gap:12px;align-items:flex-start;background:var(--surface-2);
+  border-radius:12px;padding:14px;font-size:15px;line-height:1.45;
+}
+.esito .cerchio{
+  flex:none;width:26px;height:26px;border-radius:50%;background:var(--ok);
+  display:grid;place-items:center;margin-top:1px;
+}
+.esito .cerchio svg{width:15px;height:15px;stroke:#fff;stroke-width:3.5;fill:none;
+  stroke-linecap:round;stroke-linejoin:round}
+
+.girella{
+  display:inline-block;width:17px;height:17px;vertical-align:-3px;margin-right:8px;
+  border:2.5px solid rgba(0,0,0,.25);border-top-color:currentColor;border-radius:50%;
+  animation:gira .7s linear infinite;
+}
+@keyframes gira{to{transform:rotate(360deg)}}
+.avviso{
+  position:fixed;left:50%;transform:translateX(-50%);bottom:calc(env(safe-area-inset-bottom) + 96px);
+  background:var(--band);color:var(--band-ink);padding:11px 17px;border-radius:10px;
+  font-size:14.5px;z-index:50;max-width:88vw;text-align:center;
+}
+.pie{text-align:center;font-size:12px;color:var(--muted);padding:22px 12px 4px}
+</style>
+</head>
+<body>
+
+<header class="head">
+  <h1>EVOLPLAY <span>· Rapportino giornaliero</span></h1>
+  <p id="sottotitolo">Una scheda per ogni cantiere, ogni sera al rientro.</p>
+</header>
+
+<div id="ripresa"></div>
+<main class="wrap" id="modulo"></main>
+<div class="pie" id="pie"></div>
+
+<div class="barra">
+  <div class="dentro">
+    <button class="grande" id="crea" type="button">Crea il rapportino</button>
+  </div>
+</div>
+
+<script>
+"use strict";
+
+var CONFIG = {
+  revisione: "rev. 2",
+  operai: ["Diego","Khalid","Luca","Sing","Salah","Andrea","Nicola"],
+  mezzi: ["Fiorino 1","Fiorino 2","Eurocargo","Iveco Jerry","Iveco Telonato"]
+};
+
+var LS = "evp.rap.bozza", LS_CAPO = "evp.rap.capo",
+    LS_CANT = "evp.rap.cantieri", LS_SQ = "evp.rap.squadra",
+    LS_TRASF = "evp.rap.trasferta";
+
+/* Testi della trasferta: usati nella schermata, nel PDF e nel messaggio. */
+var TRASF = {
+  no:      { corto:"No",
+             pdf:"No",
+             badge:"" },
+  si:      { corto:"Sì",
+             pdf:"Sì (tipo di giornata non indicato)",
+             badge:"IN TRASFERTA" },
+  andata:  { corto:"Sì · partenza",
+             pdf:"Sì · partiti dalla ditta, la squadra ha pernottato fuori sede",
+             badge:"TRASFERTA · PARTENZA" },
+  fuori:   { corto:"Sì · giornata intera fuori",
+             pdf:"Sì · giornata intera fuori sede, nessun passaggio in ditta",
+             badge:"TRASFERTA · FUORI SEDE" },
+  ritorno: { corto:"Sì · rientro",
+             pdf:"Sì · rientrati in ditta dalla trasferta",
+             badge:"TRASFERTA · RIENTRO" }
+};
+function serveArrivo(){ return F.trasferta === "no" || F.trasferta === "andata"; }
+function serveRientro(){ return F.trasferta === "no" || F.trasferta === "ritorno"; }
+
+function oggi(){ var d=new Date(),p=function(n){return(n<10?"0":"")+n;};
+  return d.getFullYear()+"-"+p(d.getMonth()+1)+"-"+p(d.getDate()); }
+
+function vuoto(){ return {
+  capo:"", data:oggi(), cantiere:null,
+  trasferta:"no",   // no | si (tipo da scegliere) | andata | fuori | ritorno
+  arrivo:"", rientro:"",
+  ore:{},            // { nome: {ord:"8", str:""} }
+  km:{},             // { mezzo: "120" }
+  senzaMezzi:false,
+  lavorazioni:""
+}; }
+
+var F = vuoto();
+var CANTIERI = [];     // [{id, nome, luogo}]
+var ripreso = false;
+var nuovoAperto = false;
+
+function leggi(k, alt){ try{ var v = localStorage.getItem(k); return v ? JSON.parse(v) : alt; }catch(e){ return alt; } }
+function scrivi(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+
+CANTIERI = leggi(LS_CANT, []);
+(function(){
+  var b = leggi(LS, null);
+  if(b && (b.cantiere || b.lavorazioni || Object.keys(b.ore||{}).length)){
+    F = Object.assign(vuoto(), b); ripreso = true;
+  }
+  var capo = leggi(LS_CAPO, "");
+  if(capo && !F.capo) F.capo = capo;
+  if(!ripreso){
+    var sq = leggi(LS_SQ, []);
+    sq.forEach(function(n){ if(CONFIG.operai.indexOf(n) >= 0) F.ore[n] = {ord:"8", str:""}; });
+    applicaSuggerimento();
+  }
+})();
+
+function salva(){ scrivi(LS, F); if(F.capo) scrivi(LS_CAPO, F.capo); }
+
+/* Se l'ultimo rapportino inviato diceva che la squadra dormiva fuori,
+   il giorno dopo la domanda parte già su « Sì »: così non può capitare
+   che manchi l'arrivo in ditta senza una spiegazione. */
+function trasfertaAperta(){
+  var u = leggi(LS_TRASF, null);
+  if(!u || !u.data) return false;
+  if(u.stato !== "andata" && u.stato !== "fuori") return false;
+  var g = (new Date(oggi()) - new Date(u.data)) / 86400000;
+  return g >= 0 && g <= 4;
+}
+function applicaSuggerimento(){ if(trasfertaAperta()) F.trasferta = "si"; }
+function salvaCantieri(){ scrivi(LS_CANT, CANTIERI); }
+function azzera(){
+  try{ localStorage.removeItem(LS); }catch(e){}
+  var capo = F.capo; F = vuoto(); F.capo = capo; ripreso = false; nuovoAperto = false;
+  var sq = leggi(LS_SQ, []);
+  sq.forEach(function(n){ if(CONFIG.operai.indexOf(n) >= 0) F.ore[n] = {ord:"8", str:""}; });
+  applicaSuggerimento();
+  costruisci(); window.scrollTo(0,0);
+}
+
+/* ─────────── DOM ─────────── */
+function el(tag, at, kids){
+  var n = document.createElement(tag);
+  if(at) for(var k in at){
+    if(k==="class") n.className = at[k];
+    else if(k==="html") n.innerHTML = at[k];
+    else if(k==="text") n.textContent = at[k];
+    else if(k.slice(0,2)==="on") n.addEventListener(k.slice(2), at[k]);
+    else if(at[k]!==null && at[k]!==undefined) n.setAttribute(k, at[k]);
+  }
+  (kids||[]).forEach(function(c){ if(c) n.appendChild(c); });
+  return n;
+}
+function spunta(){
+  return el("span",{html:'<svg viewBox="0 0 24 24"><path d="M4 12.5l5.5 5.5L20 6.5"/></svg>'}).firstChild;
+}
+function avviso(t){
+  var v = document.querySelector(".avviso"); if(v) v.remove();
+  var n = el("div",{class:"avviso", text:t}); document.body.appendChild(n);
+  setTimeout(function(){ n.remove(); }, 3000);
+}
+function campo(id, etichetta, controllo, aiuto){
+  return el("div",{class:"f", id:"c_"+id},[
+    el("label",{html: etichetta + ' <i>*</i>'}),
+    controllo,
+    aiuto ? el("div",{class:"aiuto", text:aiuto}) : null
+  ]);
+}
+function pulisci(n){ var c = n.closest(".f"); if(c) c.classList.remove("manca"); }
+function sezione(numero, titolo, nota, corpo){
+  var dentro = corpo.slice();
+  if(nota) dentro.unshift(el("div",{class:"nota-sez", text:nota}));
+  return el("section",{class:"sec"},[
+    el("div",{class:"band"},[ el("b",{text:numero}), el("h2",{text:titolo}) ]),
+    el("div",{class:"body"}, dentro)
+  ]);
+}
+function pillola(testo, attivo, azione){
+  var b = el("button",{type:"button", class:"pill", "aria-pressed": attivo?"true":"false",
+    onclick:function(){ azione(); salva(); costruisci(); }});
+  b.appendChild(el("span",{class:"seg"},[spunta()]));
+  b.appendChild(el("span",{text:testo}));
+  return b;
+}
+function numeroInput(valore, alCambio, opts){
+  opts = opts || {};
+  var i = el("input",{type:"number", inputmode:"decimal", step:opts.step||"0.5",
+    min:"0", max:opts.max||"24", value:valore||"", placeholder:opts.ph||"0"});
+  i.addEventListener("input", function(){ alCambio(i.value); salva(); pulisci(i); });
+  return i;
+}
+
+/* ─────────── PAGINA ─────────── */
+function costruisci(){
+  var m = document.getElementById("modulo");
+  m.innerHTML = "";
+
+  var r = document.getElementById("ripresa");
+  r.innerHTML = "";
+  if(ripreso){
+    var c = F.cantiere;
+    r.appendChild(el("div",{class:"ripresa"},[
+      el("span",{text:"Stai continuando il rapportino di " + (c ? c.nome : "un cantiere")}),
+      el("button",{type:"button", text:"Ricomincia", onclick:function(){
+        if(confirm("Cancello quello che hai scritto e ricomincio da zero?")) azzera();
+      }})
+    ]));
+  }
+  document.getElementById("sottotitolo").textContent =
+    F.capo ? ("Squadra di " + F.capo + " · una scheda per ogni cantiere")
+           : "Una scheda per ogni cantiere, ogni sera al rientro.";
+
+  /* 1 — CHI E QUANDO */
+  var iData = el("input",{type:"date", value:F.data});
+  iData.addEventListener("input", function(){ F.data = iData.value; salva(); pulisci(iData); });
+
+  var capoOpts = el("div",{class:"pill-grid"}, CONFIG.operai.map(function(n){
+    return pillola(n, F.capo === n, function(){ F.capo = (F.capo === n) ? "" : n; });
+  }));
+
+  m.appendChild(sezione("1","Chi e quando","", [
+    campo("capo","Caposquadra", capoOpts,
+      "Tocca il tuo nome. Il telefono se lo ricorda per le prossime volte."),
+    campo("data","Data del lavoro", iData,
+      "È già impostata su oggi. Cambiala solo se stai compilando un giorno arretrato.")
+  ]));
+
+  /* 2 — CANTIERE */
+  var blocchi = [];
+  if(CANTIERI.length){
+    blocchi.push(el("div",{class:"commesse"}, CANTIERI.map(function(c){
+      var attivo = F.cantiere && F.cantiere.id === c.id;
+      return el("div",{class:"cm", "aria-pressed": attivo?"true":"false"},[
+        el("span",{class:"q"},[spunta()]),
+        el("button",{class:"testo", type:"button", onclick:function(){
+          F.cantiere = attivo ? null : {id:c.id, nome:c.nome, luogo:c.luogo};
+          salva(); costruisci();
+        }},[
+          el("b",{text:c.nome}), el("small",{text:c.luogo})
+        ]),
+        el("button",{class:"via", type:"button", html:"&times;", "aria-label":"Togli dall'elenco",
+          onclick:function(){
+            if(!confirm("Tolgo « " + c.nome + " » dall'elenco? I rapportini già inviati non cambiano.")) return;
+            CANTIERI = CANTIERI.filter(function(x){ return x.id !== c.id; });
+            if(F.cantiere && F.cantiere.id === c.id) F.cantiere = null;
+            salvaCantieri(); salva(); costruisci();
+          }})
+      ]);
+    })));
+  }
+
+  if(nuovoAperto){
+    var nomeN = el("input",{type:"text", placeholder:"Es. Parco Giochi Via Verdi", autocomplete:"off"});
+    var luogoN = el("input",{type:"text", placeholder:"Es. Bergamo", autocomplete:"off"});
+    blocchi.push(el("div",{class:"body", style:"border:1.5px solid var(--accent);border-radius:12px;background:var(--accent-tint)"},[
+      el("div",{class:"f"},[ el("label",{text:"Nome della commessa"}), nomeN,
+        el("div",{class:"aiuto", text:"Il nome esatto della commessa, quello che usi in ufficio. Lo scrivi una volta sola: da domani lo trovi qui sopra."}) ]),
+      el("div",{class:"f"},[ el("label",{text:"Luogo del cantiere"}), luogoN ]),
+      el("button",{class:"grande", type:"button", text:"Aggiungi il cantiere", onclick:function(){
+        var n = nomeN.value.trim(), l = luogoN.value.trim();
+        if(!n || !l){ avviso("Servono sia il nome della commessa sia il luogo."); return; }
+        var c = {id:"c"+Date.now(), nome:n, luogo:l};
+        CANTIERI.unshift(c); salvaCantieri();
+        F.cantiere = {id:c.id, nome:c.nome, luogo:c.luogo};
+        nuovoAperto = false; salva(); costruisci();
+      }}),
+      el("button",{class:"grande chiaro", type:"button", text:"Annulla", style:"margin-top:8px",
+        onclick:function(){ nuovoAperto = false; costruisci(); }})
+    ]));
+  } else {
+    blocchi.push(el("button",{class:"nuovo", type:"button", text:"＋  Nuovo cantiere",
+      onclick:function(){ nuovoAperto = true; costruisci(); }}));
+  }
+
+  m.appendChild(sezione("2","Cantiere",
+    "il nome della commessa serve sempre: « Milano » da solo non basta, in ufficio ci sono più cantieri nella stessa città",
+    [ el("div",{class:"f", id:"c_cantiere"},[
+        el("label",{html:'Su quale cantiere avete lavorato <i>*</i>'}),
+        el("div",{}, blocchi)
+      ]) ]));
+
+  /* 3 — ORARI E TRASFERTA */
+  var iArr = el("input",{type:"time", value:F.arrivo});
+  iArr.addEventListener("input", function(){ F.arrivo = iArr.value; salva(); pulisci(iArr); });
+  var iRit = el("input",{type:"time", value:F.rientro});
+  iRit.addEventListener("input", function(){ F.rientro = iRit.value; salva(); pulisci(iRit); });
+
+  function cambiaTrasferta(v){
+    F.trasferta = v;
+    if(!serveArrivo())  F.arrivo  = "";
+    if(!serveRientro()) F.rientro = "";
+  }
+  var inTrasferta = F.trasferta !== "no";
+
+  var siNo = el("div",{class:"pill-grid"},[
+    pillola("No, giornata normale", !inTrasferta, function(){ cambiaTrasferta("no"); }),
+    pillola("Sì, in trasferta", inTrasferta, function(){
+      if(!inTrasferta) cambiaTrasferta("si");
+    })
+  ]);
+
+  var corpo3 = [ campo("trasferta","Oggi siete stati in trasferta?", siNo) ];
+
+  if(inTrasferta){
+    var TIPI = [
+      ["andata",  "Siamo partiti oggi",        "Partiti dalla ditta, stanotte si dorme fuori. Non c'è rientro."],
+      ["fuori",   "Giornata intera fuori",     "Già fuori ieri sera e ancora fuori stanotte. Nessun orario in ditta."],
+      ["ritorno", "Siamo rientrati stasera",   "Partiti dal posto della trasferta e tornati in ditta. Non c'è arrivo."]
+    ];
+    corpo3.push(el("div",{class:"f", id:"c_tipotrasferta"},[
+      el("label",{html:'Che giornata è stata <i>*</i>'}),
+      el("div",{class:"opts"}, TIPI.map(function(t){
+        var b = el("button",{type:"button", class:"opt tondo",
+          "aria-pressed": F.trasferta === t[0] ? "true" : "false",
+          onclick:function(){ cambiaTrasferta(t[0]); salva(); costruisci(); }});
+        b.appendChild(el("span",{class:"q"},[spunta()]));
+        b.appendChild(el("span",{class:"t", html: t[1] + "<small>" + t[2] + "</small>"}));
+        return b;
+      }))
+    ]));
+  }
+
+  function oraSpenta(etichetta, motivo){
+    return el("div",{class:"f"},[
+      el("label",{text: etichetta}),
+      el("div",{class:"nd", html:"<b>—</b>" + motivo})
+    ]);
+  }
+  corpo3.push(el("div",{class:"due-col"},[
+    serveArrivo()  ? campo("arrivo","Arrivo", iArr)
+                   : oraSpenta("Arrivo",  F.trasferta === "ritorno" ? "partiti dalla trasferta" : "in trasferta"),
+    serveRientro() ? campo("rientro","Rientro", iRit)
+                   : oraSpenta("Rientro", F.trasferta === "andata" ? "si dorme fuori" : "in trasferta")
+  ]));
+
+  var AIUTO3 = {
+    no:      "L'ora in cui la squadra è partita dalla ditta e quella in cui è rientrata.",
+    si:      "Scegli che giornata è stata: serve per sapere in ufficio perché manca un orario.",
+    andata:  "Oggi serve solo l'ora di partenza dalla ditta. Il rientro lo scriverai nel rapportino del giorno in cui tornate.",
+    fuori:   "Giornata interamente fuori: non c'è nessun orario in ditta da scrivere.",
+    ritorno: "Oggi serve solo l'ora di rientro in ditta."
+  };
+  corpo3.push(el("div",{class:"aiuto", text: AIUTO3[F.trasferta] || AIUTO3.no}));
+
+  m.appendChild(sezione("3","Orari e trasferta",
+    (trasfertaAperta() && F.trasferta !== "no")
+      ? "l'ultimo rapportino diceva che la squadra dormiva fuori: dimmi com'è andata oggi"
+      : "",
+    corpo3));
+
+  /* 4 — SQUADRA E ORE */
+  var nomi = el("div",{class:"pill-grid"}, CONFIG.operai.map(function(n){
+    var presente = !!F.ore[n];
+    return pillola(n, presente, function(){
+      if(presente) delete F.ore[n];
+      else F.ore[n] = {ord:"8", str:""};
+      scrivi(LS_SQ, Object.keys(F.ore));
+    });
+  }));
+
+  var presenti = Object.keys(F.ore);
+  var corpo4 = [
+    campo("squadra","Chi c'era oggi", nomi,
+      "Tocca i nomi. Il telefono propone la squadra dell'ultima volta.")
+  ];
+  if(presenti.length){
+    var totOrd = 0, totStr = 0;
+    var righe = presenti.map(function(n){
+      totOrd += parseFloat(F.ore[n].ord) || 0;
+      totStr += parseFloat(F.ore[n].str) || 0;
+      return el("div",{class:"riga"},[
+        el("span",{class:"nome", text:n}),
+        numeroInput(F.ore[n].ord, function(v){ F.ore[n].ord = v; aggiornaTotali(); }, {max:"16"}),
+        numeroInput(F.ore[n].str, function(v){ F.ore[n].str = v; aggiornaTotali(); }, {max:"12"})
+      ]);
+    });
+    corpo4.push(el("div",{class:"f", id:"c_ore"},[
+      el("label",{html:'Ore di ciascuno <i>*</i>'}),
+      el("div",{class:"tab"},[
+        el("div",{class:"intest"},[
+          el("span",{text:"Operaio"}), el("span",{text:"Ordin."}), el("span",{text:"Straord."})
+        ])
+      ].concat(righe)),
+      el("div",{class:"tot", id:"totali"},[
+        el("span",{text:"Totale giornata"}),
+        el("b",{text: fmt(totOrd) + " ord  +  " + fmt(totStr) + " str"})
+      ]),
+      el("div",{class:"aiuto", text:"Le ordinarie partono da 8: correggi solo chi ha fatto diverso."})
+    ]));
+  }
+  m.appendChild(sezione("4","Squadra e ore","", corpo4));
+
+  /* 5 — MEZZI E KM */
+  var mezziPill = el("div",{class:"pill-grid"}, CONFIG.mezzi.map(function(mz){
+    var usato = F.km[mz] !== undefined;
+    return pillola(mz, usato, function(){
+      if(usato) delete F.km[mz];
+      else { F.km[mz] = ""; F.senzaMezzi = false; }
+    });
+  }));
+  var usati = Object.keys(F.km);
+  var corpo5 = [ el("div",{class:"f", id:"c_mezzi"},[
+    el("label",{html:'Mezzi usati <i>*</i>'}), mezziPill ]) ];
+  if(usati.length){
+    corpo5.push(el("div",{class:"f", id:"c_km"},[
+      el("label",{html:'Chilometri per mezzo <i>*</i>'}),
+      el("div",{class:"km"}, usati.map(function(mz){
+        return el("div",{class:"riga"},[
+          el("span",{class:"nome", text:mz}),
+          el("div",{class:"box"},[
+            numeroInput(F.km[mz], function(v){ F.km[mz] = v; }, {step:"1", max:"2000", ph:"0"}),
+            el("span",{class:"u", text:"km"})
+          ])
+        ]);
+      }))
+    ]));
+  }
+  corpo5.push(el("div",{class:"opts"},[
+    (function(){
+      var b = el("button",{type:"button", class:"opt", "aria-pressed": F.senzaMezzi?"true":"false",
+        onclick:function(){
+          F.senzaMezzi = !F.senzaMezzi;
+          if(F.senzaMezzi) F.km = {};
+          salva(); costruisci();
+        }});
+      b.appendChild(el("span",{class:"q"},[spunta()]));
+      b.appendChild(el("span",{class:"t", text:"Nessun mezzo aziendale",
+        html:'Nessun mezzo aziendale<small>Oggi la squadra non ha usato mezzi della ditta</small>'}));
+      return b;
+    })()
+  ]));
+  m.appendChild(sezione("5","Mezzi e chilometri","", corpo5));
+
+  /* 6 — LAVORAZIONI */
+  var ta = el("textarea",{placeholder:"Es. Posa pavimentazione antitrauma sul lato nord, circa 90 m². Montaggio scivolo doppio e altalena."});
+  ta.value = F.lavorazioni;
+  ta.addEventListener("input", function(){
+    F.lavorazioni = ta.value; salva(); pulisci(ta);
+    var c = document.getElementById("contatore");
+    if(c) c.textContent = contaTesto();
+  });
+  m.appendChild(sezione("6","Lavorazioni svolte",
+    "serve in ufficio per sapere cosa è stato fatto e in quanto tempo",[
+    campo("lavorazioni","Cosa avete fatto oggi", ta,
+      "Due righe bastano, ma devono dire cosa e dove. « Lavori vari » non è una risposta."),
+    el("div",{class:"aiuto", id:"contatore", text: contaTesto()})
+  ]));
+
+  document.getElementById("pie").textContent =
+    "Evolplay S.r.l. · Rapportino operai " + CONFIG.revisione;
+}
+
+function fmt(n){ return (Math.round(n*100)/100).toString().replace(".", ","); }
+var MIN_TESTO = 25;
+function contaTesto(){
+  var n = F.lavorazioni.trim().length;
+  if(n === 0) return "Ancora niente scritto.";
+  if(n < MIN_TESTO) return "Troppo corto: ancora " + (MIN_TESTO - n) + " caratteri.";
+  return "Va bene così.";
+}
+function aggiornaTotali(){
+  var to = 0, ts = 0;
+  Object.keys(F.ore).forEach(function(n){
+    to += parseFloat(F.ore[n].ord) || 0;
+    ts += parseFloat(F.ore[n].str) || 0;
+  });
+  var t = document.getElementById("totali");
+  if(t) t.lastChild.textContent = fmt(to) + " ord  +  " + fmt(ts) + " str";
+}
+
+/* ─────────── CONTROLLI ─────────── */
+function mancanti(){
+  var m = [];
+  if(!F.capo) m.push({id:"capo", t:"Il tuo nome di caposquadra"});
+  if(!F.data) m.push({id:"data", t:"La data del lavoro"});
+  if(!F.cantiere) m.push({id:"cantiere", t:"Il cantiere su cui avete lavorato"});
+  if(F.trasferta === "si") m.push({id:"tipotrasferta", t:"Che giornata di trasferta è stata"});
+  if(serveArrivo()  && !F.arrivo)  m.push({id:"arrivo",  t:"L'ora di arrivo in ditta"});
+  if(serveRientro() && !F.rientro) m.push({id:"rientro", t:"L'ora di rientro in ditta"});
+
+  var presenti = Object.keys(F.ore);
+  if(presenti.length === 0) m.push({id:"squadra", t:"Chi c'era oggi"});
+  else {
+    var senzaOre = presenti.filter(function(n){ return !(parseFloat(F.ore[n].ord) > 0 || parseFloat(F.ore[n].str) > 0); });
+    if(senzaOre.length) m.push({id:"ore", t:"Le ore di " + senzaOre.join(", ")});
+  }
+
+  var usati = Object.keys(F.km);
+  if(!F.senzaMezzi && usati.length === 0)
+    m.push({id:"mezzi", t:"I mezzi usati (o « nessun mezzo aziendale »)"});
+  else {
+    var senzaKm = usati.filter(function(mz){ return !(parseFloat(F.km[mz]) > 0); });
+    if(senzaKm.length) m.push({id:"km", t:"I chilometri di " + senzaKm.join(", ")});
+  }
+
+  if(F.lavorazioni.trim().length < MIN_TESTO)
+    m.push({id:"lavorazioni", t:"La descrizione delle lavorazioni svolte"});
+  return m;
+}
+function evidenzia(lista){
+  lista.forEach(function(x){
+    var c = document.getElementById("c_"+x.id);
+    if(c) c.classList.add("manca");
+  });
+}
+function vaiA(id){
+  var c = document.getElementById("c_"+id);
+  if(c){ c.classList.add("manca"); c.scrollIntoView({block:"center"}); }
+}
+
+/* ─────────── PDF ─────────── */
+var PDF = (function(){
+  var A4W = 595.28, A4H = 841.89;
+  function lat1(s){
+    var mappa = {"’":"'","‘":"'","“":'"',"”":'"',"–":"-","—":"-","…":"...","→":"->","•":"-","·":"-"," ":" ","²":"2"};
+    var out = "";
+    for(var i=0;i<s.length;i++){
+      var ch = s[i];
+      if(mappa[ch] !== undefined){ out += mappa[ch]; continue; }
+      out += (ch.charCodeAt(0) <= 255) ? ch : "?";
+    }
+    return out;
+  }
+  function esc(s){ return lat1(String(s)).replace(/\\/g,"\\\\").replace(/\(/g,"\\(").replace(/\)/g,"\\)"); }
+  var STRETTI = "iljtIf.,:;'|!()[]-", LARGHI = "mwMW@%";
+  function larghezza(s, size){
+    var u = 0;
+    for(var i=0;i<s.length;i++){
+      var c = s[i];
+      if(STRETTI.indexOf(c)>=0) u += 0.30;
+      else if(LARGHI.indexOf(c)>=0) u += 0.85;
+      else if(c>="A" && c<="Z") u += 0.68;
+      else if(c===" ") u += 0.28;
+      else u += 0.52;
+    }
+    return u*size;
+  }
+  function spezza(s, size, max){
+    var out = [];
+    String(s).split(/\r?\n/).forEach(function(blocco){
+      if(!blocco.trim()){ out.push(""); return; }
+      var cur = "";
+      blocco.split(/\s+/).forEach(function(p){
+        var prova = cur ? cur+" "+p : p;
+        if(larghezza(prova,size) <= max) cur = prova;
+        else { if(cur) out.push(cur); cur = p; }
+      });
+      if(cur) out.push(cur);
+    });
+    return out.length ? out : [""];
+  }
+  function Doc(){ this.pagine = []; }
+  Doc.prototype.nuova = function(){ var p = {ops:[]}; this.pagine.push(p); return p; };
+  function C(v){ return (Math.round(v*100)/100).toString(); }
+  Doc.prototype.build = function(){
+    var self = this, parti = [], off = 0, xref = [];
+    function push(x){
+      var b = new Uint8Array(x.length);
+      for(var i=0;i<x.length;i++) b[i] = x.charCodeAt(i) & 0xff;
+      parti.push(b); off += b.length;
+    }
+    var idP = function(i){ return 5 + i*2; }, idC = function(i){ return 6 + i*2; };
+    var kids = self.pagine.map(function(_,i){ return idP(i)+" 0 R"; }).join(" ");
+    push("%PDF-1.4\n%\xE2\xE3\xCF\xD3\n");
+    function obj(n, testa, corpo){
+      xref[n] = off; push(n+" 0 obj\n"+testa+"\n");
+      if(corpo){ push("stream\n"); push(corpo); push("\nendstream\n"); }
+      push("endobj\n");
+    }
+    obj(1, "<< /Type /Catalog /Pages 2 0 R >>");
+    obj(2, "<< /Type /Pages /Count "+self.pagine.length+" /Kids ["+kids+"] >>");
+    obj(3, "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>");
+    obj(4, "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>");
+    self.pagine.forEach(function(p,i){
+      obj(idP(i), "<< /Type /Page /Parent 2 0 R /MediaBox [0 0 "+C(A4W)+" "+C(A4H)+
+        "] /Resources << /Font << /F1 3 0 R /F2 4 0 R >> >> /Contents "+idC(i)+" 0 R >>");
+      var f = p.ops.join("\n");
+      obj(idC(i), "<< /Length "+f.length+" >>", f);
+    });
+    var inizio = off, tot = idC(self.pagine.length-1)+1;
+    var x = "xref\n0 "+tot+"\n0000000000 65535 f \n";
+    for(var j=1;j<tot;j++) x += ("0000000000"+(xref[j]||0)).slice(-10)+" 00000 n \n";
+    x += "trailer\n<< /Size "+tot+" /Root 1 0 R >>\nstartxref\n"+inizio+"\n%%EOF";
+    push(x);
+    var n = parti.reduce(function(a,b){ return a+b.length; },0);
+    var out = new Uint8Array(n), pos = 0;
+    parti.forEach(function(b){ out.set(b,pos); pos += b.length; });
+    return new Blob([out], {type:"application/pdf"});
+  };
+  return {Doc:Doc, A4W:A4W, A4H:A4H, esc:esc, spezza:spezza, larghezza:larghezza, C:C};
+})();
+
+function dataIT(s){ return s ? s.split("-").reverse().join("/") : ""; }
+function totali(){
+  var o = 0, s = 0;
+  Object.keys(F.ore).forEach(function(n){
+    o += parseFloat(F.ore[n].ord) || 0; s += parseFloat(F.ore[n].str) || 0;
+  });
+  var k = 0;
+  Object.keys(F.km).forEach(function(mz){ k += parseFloat(F.km[mz]) || 0; });
+  return {ord:o, str:s, km:k};
+}
+
+function creaPDF(){
+  var d = new PDF.Doc(), W = PDF.A4W, H = PDF.A4H, C = PDF.C, esc = PDF.esc;
+  var ML = 38, larg = W - 76;
+  var p = d.nuova(), ops = p.ops, y;
+  var T = totali();
+
+  function rett(x,yy,w,h,col){ ops.push(col+" rg "+C(x)+" "+C(yy)+" "+C(w)+" "+C(h)+" re f"); }
+  function txt(x,yy,s,size,gr,col){
+    ops.push("BT /"+(gr?"F2":"F1")+" "+C(size)+" Tf "+(col||"0.06 0.10 0.17")+" rg "+
+      C(x)+" "+C(yy)+" Td ("+esc(s)+") Tj ET");
+  }
+  function txtDx(xDx,yy,s,size,gr,col){ txt(xDx - PDF.larghezza(String(s), size), yy, s, size, gr, col); }
+  function linea(yy,col){ ops.push((col||"0.85 0.88 0.92")+" RG 0.7 w "+C(ML)+" "+C(yy)+" m "+C(W-ML)+" "+C(yy)+" l S"); }
+  function nuovaPagina(){ p = d.nuova(); ops = p.ops; y = H - 46; }
+
+  /* testata */
+  rett(0, H-72, W, 72, "0.086 0.137 0.227");
+  txt(ML, H-42, "EVOLPLAY", 19, true, "1 1 1");
+  txt(ML+108, H-42, "RAPPORTINO GIORNALIERO", 15, false, "0.72 0.79 0.88");
+  txt(ML, H-60, "Squadra di " + (F.capo || "-") + "  -  compilato dal telefono  -  " + CONFIG.revisione,
+      8, false, "0.58 0.67 0.79");
+  var dt = dataIT(F.data);
+  txtDx(W-ML, H-42, dt, 15, true, "0.84 0.53 0.04");
+  if(F.trasferta !== "no")
+    txtDx(W-ML, H-60, TRASF[F.trasferta].badge, 8.5, true, "0.94 0.70 0.20");
+  y = H - 72 - 20;
+
+  /* striscia cantiere */
+  var c = F.cantiere || {nome:"", luogo:""};
+  var hC = 40;
+  rett(ML, y-hC+10, larg, hC, "0.99 0.95 0.87");
+  rett(ML, y-hC+10, 3, hC, "0.84 0.53 0.04");
+  txt(ML+12, y-3, "COMMESSA", 7.4, true, "0.54 0.34 0.02");
+  txt(ML+12, y-17, c.nome, 13, true, "0.12 0.09 0.03");
+  txtDx(W-ML-12, y-3, "LUOGO", 7.4, true, "0.54 0.34 0.02");
+  txtDx(W-ML-12, y-17, c.luogo, 11, false, "0.20 0.15 0.05");
+  y -= hC + 12;
+
+  function banda(n, titolo, destra){
+    if(y < 120) nuovaPagina(); else y -= 8;
+    rett(ML, y-13, larg, 17, "0.086 0.137 0.227");
+    txt(ML+7, y-8.5, n, 9.5, true, "0.94 0.70 0.20");
+    txt(ML+22, y-8.5, titolo.toUpperCase(), 9.5, true, "1 1 1");
+    if(destra) txtDx(W-ML-8, y-8.5, destra, 8.5, false, "0.72 0.79 0.88");
+    y -= 23;
+  }
+  function voce(k, v){
+    var val = (v===null||v===undefined||v==="") ? "-" : String(v);
+    var xv = ML + 150, wv = larg - 150 - 4;
+    var righe = PDF.spezza(val, 9.5, wv);
+    var alt = Math.max(righe.length*12, 13);
+    if(y - alt < 56) nuovaPagina();
+    txt(ML+2, y-8.5, k.toUpperCase(), 7.4, true, "0.36 0.42 0.50");
+    righe.forEach(function(rg,i){ txt(xv, y-8.5-(i*12), rg, 9.5, false); });
+    y -= alt + 2; linea(y+3); y -= 3;
+  }
+  function tabella(colonne, righe, totale){
+    // colonne: [{tit, x, dx}]  righe: [[v1,v2,...]]
+    if(y - (righe.length+2)*14 < 56) nuovaPagina();
+    colonne.forEach(function(col){
+      if(col.dx) txtDx(col.x, y-8, col.tit.toUpperCase(), 7.4, true, "0.36 0.42 0.50");
+      else txt(col.x, y-8, col.tit.toUpperCase(), 7.4, true, "0.36 0.42 0.50");
+    });
+    y -= 13; linea(y+3, "0.78 0.82 0.87"); y -= 2;
+    righe.forEach(function(rg){
+      if(y - 15 < 52) nuovaPagina();
+      colonne.forEach(function(col, i){
+        if(col.dx) txtDx(col.x, y-9, rg[i], 9.5, i===0);
+        else txt(col.x, y-9, rg[i], 9.5, i===0);
+      });
+      y -= 14; linea(y+3); y -= 1;
+    });
+    if(totale){
+      y -= 2;
+      colonne.forEach(function(col, i){
+        if(totale[i] === undefined || totale[i] === "") return;
+        if(col.dx) txtDx(col.x, y-9, totale[i], 9.5, true, "0.09 0.14 0.23");
+        else txt(col.x, y-9, totale[i], 9.5, true, "0.09 0.14 0.23");
+      });
+      y -= 14;
+    }
+    y -= 4;
+  }
+  function blocco(titolo, corpo){
+    var righe = PDF.spezza(corpo, 10, larg-8);
+    var alt = righe.length*13 + 14;
+    if(y - alt < 56) nuovaPagina();
+    txt(ML+2, y-8.5, titolo.toUpperCase(), 7.4, true, "0.36 0.42 0.50");
+    y -= 19;
+    righe.forEach(function(rg){ txt(ML+2, y, rg, 10, false); y -= 13; });
+    y -= 4;
+  }
+
+  banda("1","Giornata");
+  voce("Data", dataIT(F.data));
+  voce("Caposquadra", F.capo);
+  voce("Trasferta", TRASF[F.trasferta].pdf);
+  voce("Arrivo in ditta", serveArrivo() ? F.arrivo
+       : (F.trasferta === "ritorno" ? "Partiti dal luogo della trasferta" : "Nessun passaggio in ditta"));
+  voce("Rientro in ditta", serveRientro() ? F.rientro
+       : (F.trasferta === "andata" ? "Pernottamento fuori sede" : "Nessun passaggio in ditta"));
+
+  banda("2","Personale e ore", "totale " + fmt(T.ord + T.str) + " ore");
+  var colOre = [
+    {tit:"Operaio", x:ML+2},
+    {tit:"Ordinarie", x:ML+330, dx:true},
+    {tit:"Straordinarie", x:ML+440, dx:true}
+  ];
+  var righeOre = Object.keys(F.ore).map(function(n){
+    var o = parseFloat(F.ore[n].ord) || 0, s = parseFloat(F.ore[n].str) || 0;
+    return [n, fmt(o), s ? fmt(s) : "-"];
+  });
+  tabella(colOre, righeOre, ["TOTALE", fmt(T.ord), T.str ? fmt(T.str) : "-"]);
+
+  banda("3","Mezzi e chilometri", T.km ? ("totale " + fmt(T.km) + " km") : "");
+  if(F.senzaMezzi || Object.keys(F.km).length === 0){
+    voce("Mezzi", "Nessun mezzo aziendale utilizzato");
+  } else {
+    var colKm = [ {tit:"Mezzo", x:ML+2}, {tit:"Chilometri", x:ML+440, dx:true} ];
+    var righeKm = Object.keys(F.km).map(function(mz){ return [mz, fmt(parseFloat(F.km[mz]) || 0)]; });
+    tabella(colKm, righeKm, ["TOTALE", fmt(T.km)]);
+  }
+
+  banda("4","Lavorazioni svolte");
+  blocco("Descrizione della giornata", F.lavorazioni);
+
+  return d.build();
+}
+
+function slug(s){
+  return String(s || "").toLowerCase()
+    .replace(/[àáâä]/g,"a").replace(/[èéêë]/g,"e").replace(/[ìíîï]/g,"i")
+    .replace(/[òóôö]/g,"o").replace(/[ùúûü]/g,"u")
+    .replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,36);
+}
+function nomeFile(){
+  var c = F.cantiere || {};
+  return "Rapportino_" + (F.data||"") + "_" + (slug(c.nome) || "cantiere") +
+         (F.capo ? "_" + slug(F.capo) : "") + ".pdf";
+}
+function messaggio(){
+  var T = totali(), c = F.cantiere || {};
+  return "Rapportino del " + dataIT(F.data) +
+    "\nCantiere: " + c.nome + " (" + c.luogo + ")" +
+    "\nSquadra di " + F.capo + " - " + Object.keys(F.ore).length + " operai" +
+    (F.trasferta !== "no" ? "\nTrasferta: " + TRASF[F.trasferta].corto : "") +
+    "\nOre: " + fmt(T.ord) + " ordinarie" + (T.str ? " + " + fmt(T.str) + " straordinarie" : "") +
+    (T.km ? "\nKm: " + fmt(T.km) : "");
+}
+
+/* ─────────── CONSEGNA ─────────── */
+function claudeSave(){
+  try{ if(window.claude && typeof window.claude.use === "function") return window.claude.use("downloads"); }
+  catch(e){}
+  return Promise.resolve(null);
+}
+function scaricaLink(blob, nome){
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob); a.download = nome;
+  document.body.appendChild(a); a.click();
+  setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); }, 4000);
+}
+function salvaFile(blob, nome){
+  return claudeSave().then(function(dl){
+    if(!dl){ scaricaLink(blob, nome); return "salvato"; }
+    return dl.save({filename:nome, data:blob})
+      .then(function(){ return "salvato"; })
+      .catch(function(err){
+        if(err && err.code === "declined") return "annullato";
+        scaricaLink(blob, nome); return "salvato";
+      });
+  });
+}
+function condividi(blob, nome){
+  var file;
+  try{ file = new File([blob], nome, {type:"application/pdf"}); }
+  catch(e){ return salvaFile(blob, nome); }
+  if(navigator.canShare && navigator.canShare({files:[file]})){
+    return navigator.share({files:[file], title:"Rapportino " + (F.cantiere ? F.cantiere.nome : ""),
+                            text:messaggio()})
+      .then(function(){ return "condiviso"; })
+      .catch(function(err){
+        if(err && err.name === "AbortError") return "annullato";
+        return salvaFile(blob, nome);
+      });
+  }
+  return salvaFile(blob, nome);
+}
+
+function apriVelo(kids){
+  chiudiVelo();
+  var vecchio = document.querySelector(".avviso"); if(vecchio) vecchio.remove();
+  var v = el("div",{class:"velo", id:"velo", onclick:function(ev){ if(ev.target===v) chiudiVelo(); }},[
+    el("div",{class:"foglio"}, kids)
+  ]);
+  document.body.appendChild(v);
+  return v;
+}
+function chiudiVelo(){ var v = document.getElementById("velo"); if(v) v.remove(); }
+
+function schermataFatto(esito){
+  var t = esito === "condiviso"
+    ? "Rapportino partito con il PDF allegato."
+    : "PDF salvato sul telefono. Allegalo a una mail o a un messaggio.";
+  apriVelo([
+    el("h3",{text:"Rapportino creato"}),
+    el("div",{class:"esito"},[ el("span",{class:"cerchio"},[spunta()]), el("div",{text:t}) ]),
+    el("button",{class:"grande scuro", type:"button", text:"Mandalo di nuovo",
+      onclick:function(ev){ chiudiVelo(); creaEConsegna(ev.currentTarget); }}),
+    el("div",{class:"riga2"},[
+      el("button",{class:"grande chiaro", type:"button", text:"Chiudi", onclick:chiudiVelo}),
+      el("button",{class:"grande chiaro", type:"button", text:"Nuovo rapportino", onclick:function(){
+        if(confirm("Comincio un rapportino nuovo? Questo non sarà più recuperabile.")){ chiudiVelo(); azzera(); }
+      }})
+    ])
+  ]);
+}
+
+function creaEConsegna(bottone){
+  var orig = bottone ? bottone.innerHTML : "";
+  if(bottone){ bottone.disabled = true; bottone.innerHTML = '<span class="girella"></span>Preparo il rapportino'; }
+  setTimeout(function(){
+    var blob;
+    try{ blob = creaPDF(); }
+    catch(err){
+      console.error(err);
+      if(bottone){ bottone.disabled = false; bottone.innerHTML = orig; }
+      avviso("Non sono riuscito a creare il rapportino. Riprova.");
+      return;
+    }
+    scrivi(LS_TRASF, {stato:F.trasferta, data:F.data});
+    condividi(blob, nomeFile()).then(function(esito){
+      if(bottone){ bottone.disabled = false; bottone.innerHTML = orig; }
+      if(esito === "annullato") return;
+      schermataFatto(esito);
+    });
+  }, 30);
+}
+
+document.getElementById("crea").addEventListener("click", function(){
+  var bottone = this;
+  var m = mancanti();
+  if(m.length === 0){ creaEConsegna(bottone); return; }
+  evidenzia(m);
+  apriVelo([
+    el("h3",{text: m.length === 1 ? "Manca una cosa" : "Mancano " + m.length + " cose"}),
+    el("div",{class:"aiuto", text:"Il rapportino si invia solo completo. Tocca una voce per andare dov'è."}),
+    el("ul",{}, m.map(function(x){
+      return el("li",{text:x.t, onclick:function(){ chiudiVelo(); vaiA(x.id); }});
+    })),
+    el("button",{class:"grande", type:"button", text:"Torno a completare", onclick:chiudiVelo})
+  ]);
+});
+
+costruisci();
+
+if("serviceWorker" in navigator){
+  window.addEventListener("load", function(){
+    navigator.serviceWorker.register("sw.js").catch(function(){});
+  });
+}
+</script>
+</body>
+</html>
