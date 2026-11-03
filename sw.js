@@ -1,7 +1,7 @@
 /* Rapportino Operai Evolplay — service worker
    Serve il rapportino anche senza connessione.
    Dopo ogni modifica a index.html alza il numero di VERSIONE qui sotto. */
-const VERSIONE = "v2";
+const VERSIONE = "v3";
 const CACHE = "rapportino-" + VERSIONE;
 const BASE = [ "./", "./index.html", "./manifest.json" ];
 

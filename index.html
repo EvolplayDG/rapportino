@@ -187,6 +187,10 @@ textarea{min-height:110px;resize:vertical}
 .cm .testo{flex:1;text-align:left;cursor:pointer;background:none;border:none;padding:0}
 .cm .testo b{display:block;font-size:16.5px;line-height:1.25}
 .cm .testo small{display:block;color:var(--muted);font-size:13.5px;margin-top:1px}
+.cm.logi{border-style:dashed}
+.cm.logi[aria-pressed=true]{border-style:solid}
+.cm .tag{flex:none;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--accent-strong);background:var(--accent-tint);border-radius:6px;padding:5px 8px}
 .cm .via{
   flex:none;width:34px;height:34px;border:none;border-radius:8px;background:var(--surface-2);
   color:var(--muted);font-size:19px;line-height:1;cursor:pointer;
@@ -274,8 +278,8 @@ textarea{min-height:110px;resize:vertical}
 "use strict";
 
 var CONFIG = {
-  revisione: "rev. 2",
-  operai: ["Diego","Khalid","Luca","Sing","Salah","Andrea","Nicola"],
+  revisione: "rev. 3",
+  operai: ["Diego","Khalid","Luca","Sing","Salah","Andrea","Nicola","Fabrizio"],
   mezzi: ["Fiorino 1","Fiorino 2","Eurocargo","Iveco Jerry","Iveco Telonato"]
 };
 
@@ -301,6 +305,10 @@ var TRASF = {
              pdf:"Sì · rientrati in ditta dalla trasferta",
              badge:"TRASFERTA · RIENTRO" }
 };
+/* Giornata di logistica: ritiri, consegne e trasporti per più cantieri.
+   È una voce fissa dell'elenco cantieri, non si cancella e non va salvata. */
+var LOGISTICA = {id:"logistica", nome:"Logistica", luogo:"Più cantieri"};
+function inLogistica(){ return !!(F.cantiere && F.cantiere.id === LOGISTICA.id); }
 function serveArrivo(){ return F.trasferta === "no" || F.trasferta === "andata"; }
 function serveRientro(){ return F.trasferta === "no" || F.trasferta === "ritorno"; }
 
@@ -452,6 +460,22 @@ function costruisci(){
 
   /* 2 — CANTIERE */
   var blocchi = [];
+  (function(){
+    var attivo = inLogistica();
+    blocchi.push(el("div",{class:"commesse", style:"margin-bottom:7px"},[
+      el("div",{class:"cm logi", "aria-pressed": attivo?"true":"false"},[
+        el("span",{class:"q"},[spunta()]),
+        el("button",{class:"testo", type:"button", onclick:function(){
+          F.cantiere = attivo ? null : {id:LOGISTICA.id, nome:LOGISTICA.nome, luogo:LOGISTICA.luogo};
+          salva(); costruisci();
+        }},[
+          el("b",{text:"Logistica"}),
+          el("small",{text:"Ritiri, consegne e trasporti per più cantieri"})
+        ]),
+        el("span",{class:"tag", text:"Più cantieri"})
+      ])
+    ]));
+  })();
   if(CANTIERI.length){
     blocchi.push(el("div",{class:"commesse"}, CANTIERI.map(function(c){
       var attivo = F.cantiere && F.cantiere.id === c.id;
@@ -657,17 +681,22 @@ function costruisci(){
   m.appendChild(sezione("5","Mezzi e chilometri","", corpo5));
 
   /* 6 — LAVORAZIONI */
-  var ta = el("textarea",{placeholder:"Es. Posa pavimentazione antitrauma sul lato nord, circa 90 m². Montaggio scivolo doppio e altalena."});
+  var logi = inLogistica();
+  var ta = el("textarea",{placeholder: logi
+    ? "Es. Ritiro gomma colata dal fornitore a Brescia e consegna al cantiere Parco Via Verdi (Treviglio). Trasporto altalena dal magazzino alla Scuola di Zingonia."
+    : "Es. Posa pavimentazione antitrauma sul lato nord, circa 90 m². Montaggio scivolo doppio e altalena."});
   ta.value = F.lavorazioni;
   ta.addEventListener("input", function(){
     F.lavorazioni = ta.value; salva(); pulisci(ta);
     var c = document.getElementById("contatore");
     if(c) c.textContent = contaTesto();
   });
-  m.appendChild(sezione("6","Lavorazioni svolte",
-    "serve in ufficio per sapere cosa è stato fatto e in quanto tempo",[
-    campo("lavorazioni","Cosa avete fatto oggi", ta,
-      "Due righe bastano, ma devono dire cosa e dove. « Lavori vari » non è una risposta."),
+  m.appendChild(sezione("6", logi ? "Giri di logistica" : "Lavorazioni svolte",
+    logi ? "serve in ufficio per dividere la giornata tra i cantieri serviti"
+         : "serve in ufficio per sapere cosa è stato fatto e in quanto tempo",[
+    campo("lavorazioni", logi ? "Cosa avete ritirato e consegnato, e per quali cantieri" : "Cosa avete fatto oggi", ta,
+      logi ? "Per ogni giro: cosa, da dove a dove, e il nome del cantiere servito."
+           : "Due righe bastano, ma devono dire cosa e dove. « Lavori vari » non è una risposta."),
     el("div",{class:"aiuto", id:"contatore", text: contaTesto()})
   ]));
 
@@ -698,7 +727,7 @@ function mancanti(){
   var m = [];
   if(!F.capo) m.push({id:"capo", t:"Il tuo nome di caposquadra"});
   if(!F.data) m.push({id:"data", t:"La data del lavoro"});
-  if(!F.cantiere) m.push({id:"cantiere", t:"Il cantiere su cui avete lavorato"});
+  if(!F.cantiere) m.push({id:"cantiere", t:"Il cantiere su cui avete lavorato (o « Logistica »)"});
   if(F.trasferta === "si") m.push({id:"tipotrasferta", t:"Che giornata di trasferta è stata"});
   if(serveArrivo()  && !F.arrivo)  m.push({id:"arrivo",  t:"L'ora di arrivo in ditta"});
   if(serveRientro() && !F.rientro) m.push({id:"rientro", t:"L'ora di rientro in ditta"});
@@ -719,7 +748,7 @@ function mancanti(){
   }
 
   if(F.lavorazioni.trim().length < MIN_TESTO)
-    m.push({id:"lavorazioni", t:"La descrizione delle lavorazioni svolte"});
+    m.push({id:"lavorazioni", t: inLogistica() ? "La descrizione dei giri di logistica" : "La descrizione delle lavorazioni svolte"});
   return m;
 }
 function evidenzia(lista){
@@ -858,7 +887,7 @@ function creaPDF(){
   var hC = 40;
   rett(ML, y-hC+10, larg, hC, "0.99 0.95 0.87");
   rett(ML, y-hC+10, 3, hC, "0.84 0.53 0.04");
-  txt(ML+12, y-3, "COMMESSA", 7.4, true, "0.54 0.34 0.02");
+  txt(ML+12, y-3, inLogistica() ? "GIORNATA DI" : "COMMESSA", 7.4, true, "0.54 0.34 0.02");
   txt(ML+12, y-17, c.nome, 13, true, "0.12 0.09 0.03");
   txtDx(W-ML-12, y-3, "LUOGO", 7.4, true, "0.54 0.34 0.02");
   txtDx(W-ML-12, y-17, c.luogo, 11, false, "0.20 0.15 0.05");
@@ -949,8 +978,13 @@ function creaPDF(){
     tabella(colKm, righeKm, ["TOTALE", fmt(T.km)]);
   }
 
-  banda("4","Lavorazioni svolte");
-  blocco("Descrizione della giornata", F.lavorazioni);
+  if(inLogistica()){
+    banda("4","Giri di logistica");
+    blocco("Ritiri, consegne e cantieri serviti", F.lavorazioni);
+  } else {
+    banda("4","Lavorazioni svolte");
+    blocco("Descrizione della giornata", F.lavorazioni);
+  }
 
   return d.build();
 }
@@ -969,7 +1003,7 @@ function nomeFile(){
 function messaggio(){
   var T = totali(), c = F.cantiere || {};
   return "Rapportino del " + dataIT(F.data) +
-    "\nCantiere: " + c.nome + " (" + c.luogo + ")" +
+    (inLogistica() ? "\nGiornata di logistica (più cantieri)" : "\nCantiere: " + c.nome + " (" + c.luogo + ")") +
     "\nSquadra di " + F.capo + " - " + Object.keys(F.ore).length + " operai" +
     (F.trasferta !== "no" ? "\nTrasferta: " + TRASF[F.trasferta].corto : "") +
     "\nOre: " + fmt(T.ord) + " ordinarie" + (T.str ? " + " + fmt(T.str) + " straordinarie" : "") +
