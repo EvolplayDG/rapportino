@@ -171,6 +171,21 @@ textarea{min-height:110px;resize:vertical}
 .km .riga input{padding:11px 6px;text-align:center;font-variant-numeric:tabular-nums}
 .km .riga .u{font-size:14px;color:var(--muted);font-weight:600}
 
+/* materiali (fine cantiere) */
+.mat{display:flex;flex-direction:column;gap:10px}
+.mat .riga{border:1.5px solid var(--line);border-radius:12px;padding:10px;background:var(--surface);
+  display:grid;grid-template-columns:0.8fr 1.3fr 46px;gap:8px;align-items:end}
+.mat .riga .tutta{grid-column:1 / -1}
+.mat .riga label{display:block;font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:4px}
+.mat .riga input{padding:11px 10px}
+.mat .riga .via{width:46px;height:47px;border:none;border-radius:10px;background:var(--surface-2);
+  color:var(--muted);font-size:21px;line-height:1;cursor:pointer}
+.mat .riga.incompleta{border-color:var(--accent);background:var(--accent-tint)}
+.nuovo.apri-mat{flex-direction:column;gap:2px}
+.nuovo.apri-mat small{font-size:13px;font-weight:600;color:var(--muted)}
+.foglio li.giallo{border-left-color:var(--accent)}
+
 /* commesse salvate */
 .commesse{display:flex;flex-direction:column;gap:7px}
 .cm{
@@ -278,14 +293,39 @@ textarea{min-height:110px;resize:vertical}
 "use strict";
 
 var CONFIG = {
-  revisione: "rev. 3",
+  revisione: "rev. 4",
   operai: ["Diego","Khalid","Luca","Sing","Salah","Andrea","Nicola","Fabrizio"],
   mezzi: ["Fiorino 1","Fiorino 2","Eurocargo","Iveco Jerry","Iveco Telonato"]
 };
 
 var LS = "evp.rap.bozza", LS_CAPO = "evp.rap.capo",
     LS_CANT = "evp.rap.cantieri", LS_SQ = "evp.rap.squadra",
-    LS_TRASF = "evp.rap.trasferta";
+    LS_TRASF = "evp.rap.trasferta",
+    LS_MAT = "evp.rap.materiali";   // { "cemento": {n:"Cemento", u:"sacchi"} }
+
+/* Materiali: sezione facoltativa, non blocca mai l'invio. */
+var UNITA_BASE = ["sacchi","kg","m²","m³","litri","pezzi","rotoli","metri","bancali","secchi"];
+var MEMMAT = {};
+function riempita(r){ return !!(r.n.trim() || r.q.trim() || r.u.trim()); }
+function materialiCompilati(){ return (F.materiali || []).filter(riempita); }
+function materialiIncompleti(){
+  var out = [];
+  (F.materiali || []).forEach(function(r, i){
+    if(!riempita(r)) return;
+    var manca = [];
+    if(!r.n.trim()) manca.push("il nome");
+    if(!r.q.trim()) manca.push("la quantità");
+    if(!r.u.trim()) manca.push("l'unità di misura");
+    if(manca.length) out.push({i:i, t:(r.n.trim() || "Materiale senza nome") + ": manca " + manca.join(" e ")});
+  });
+  return out;
+}
+function ricordaMateriali(){
+  materialiCompilati().forEach(function(r){
+    if(r.n.trim()) MEMMAT[r.n.trim().toLowerCase()] = {n:r.n.trim(), u:r.u.trim()};
+  });
+  scrivi(LS_MAT, MEMMAT);
+}
 
 /* Testi della trasferta: usati nella schermata, nel PDF e nel messaggio. */
 var TRASF = {
@@ -322,7 +362,8 @@ function vuoto(){ return {
   ore:{},            // { nome: {ord:"8", str:""} }
   km:{},             // { mezzo: "120" }
   senzaMezzi:false,
-  lavorazioni:""
+  lavorazioni:"",
+  materiali:[]       // [{n:"Cemento", q:"12", u:"sacchi"}] — facoltativi, a fine cantiere
 }; }
 
 var F = vuoto();
@@ -334,9 +375,10 @@ function leggi(k, alt){ try{ var v = localStorage.getItem(k); return v ? JSON.pa
 function scrivi(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
 
 CANTIERI = leggi(LS_CANT, []);
+MEMMAT = leggi(LS_MAT, {});
 (function(){
   var b = leggi(LS, null);
-  if(b && (b.cantiere || b.lavorazioni || Object.keys(b.ore||{}).length)){
+  if(b && (b.cantiere || b.lavorazioni || Object.keys(b.ore||{}).length || (b.materiali||[]).length)){
     F = Object.assign(vuoto(), b); ripreso = true;
   }
   var capo = leggi(LS_CAPO, "");
@@ -700,6 +742,62 @@ function costruisci(){
     el("div",{class:"aiuto", id:"contatore", text: contaTesto()})
   ]));
 
+  /* 7 — MATERIALI USATI (facoltativa, fine cantiere) */
+  if(!logi){
+    if(!F.materiali.length){
+      m.appendChild(el("div",{class:"sec"},[
+        el("button",{class:"nuovo apri-mat", type:"button", onclick:function(){
+          F.materiali.push({n:"", q:"", u:""}); salva(); costruisci();
+          var x = document.querySelector("#c_materiali input"); if(x){ x.scrollIntoView({block:"center"}); x.focus(); }
+        }},[
+          el("span",{text:"＋  Materiali usati"}),
+          el("small",{text:"solo a fine cantiere · non è obbligatorio"})
+        ])
+      ]));
+    } else {
+      var nomiNoti = Object.keys(MEMMAT).map(function(k){ return MEMMAT[k].n; }).sort();
+      var unitaNote = UNITA_BASE.slice();
+      Object.keys(MEMMAT).forEach(function(k){ var u = MEMMAT[k].u; if(u && unitaNote.indexOf(u) < 0) unitaNote.push(u); });
+      var dlN = el("datalist",{id:"dl-mat"}, nomiNoti.map(function(v){ return el("option",{value:v}); }));
+      var dlU = el("datalist",{id:"dl-unit"}, unitaNote.map(function(v){ return el("option",{value:v}); }));
+      var righe = F.materiali.map(function(r, i){
+        var iN = el("input",{type:"text", list:"dl-mat", placeholder:"Es. Cemento", autocomplete:"off", value:r.n});
+        var iQ = el("input",{type:"text", inputmode:"decimal", placeholder:"Es. 12", autocomplete:"off", value:r.q});
+        var iU = el("input",{type:"text", list:"dl-unit", placeholder:"Es. sacchi", autocomplete:"off", autocapitalize:"off", value:r.u});
+        var riga;
+        function aggiorna(){ r.n = iN.value; r.q = iQ.value; r.u = iU.value; salva(); if(riga) riga.classList.remove("incompleta"); }
+        iN.addEventListener("input", aggiorna);
+        iQ.addEventListener("input", aggiorna);
+        iU.addEventListener("input", aggiorna);
+        iN.addEventListener("change", function(){
+          var noto = MEMMAT[iN.value.trim().toLowerCase()];
+          if(noto && !iU.value.trim() && noto.u){ iU.value = noto.u; aggiorna(); }
+        });
+        riga = el("div",{class:"riga", "data-i":String(i)},[
+          el("div",{class:"tutta"},[ el("label",{text:"Materiale"}), iN ]),
+          el("div",{},[ el("label",{text:"Quantità"}), iQ ]),
+          el("div",{},[ el("label",{text:"Unità"}), iU ]),
+          el("button",{class:"via", type:"button", html:"&times;", "aria-label":"Togli questo materiale", onclick:function(){
+            F.materiali.splice(i, 1); salva(); costruisci();
+          }})
+        ]);
+        return riga;
+      });
+      m.appendChild(sezione("7","Materiali usati",
+        "solo a fine cantiere · non è obbligatorio, il rapportino parte anche senza",[
+        el("div",{class:"mat", id:"c_materiali"}, righe),
+        dlN, dlU,
+        el("button",{class:"nuovo", type:"button", text:"＋  Aggiungi materiale", onclick:function(){
+          F.materiali.push({n:"", q:"", u:""}); salva(); costruisci();
+          var tutte = document.querySelectorAll("#c_materiali .riga");
+          var x = tutte.length ? tutte[tutte.length-1].querySelector("input") : null;
+          if(x){ x.scrollIntoView({block:"center"}); x.focus(); }
+        }}),
+        el("div",{class:"aiuto", text:"Una riga per materiale. L'unità la scegli tu: sacchi, kg, m², rotoli… Il telefono si ricorda i materiali già scritti."})
+      ]));
+    }
+  }
+
   document.getElementById("pie").textContent =
     "Evolplay S.r.l. · Rapportino operai " + CONFIG.revisione;
 }
@@ -986,6 +1084,18 @@ function creaPDF(){
     blocco("Descrizione della giornata", F.lavorazioni);
   }
 
+  var mats = inLogistica() ? [] : materialiCompilati();
+  if(mats.length){
+    banda("5","Materiali usati", mats.length === 1 ? "1 voce" : mats.length + " voci");
+    var colMat = [ {tit:"Materiale", x:ML+2}, {tit:"Quantità", x:ML+372, dx:true}, {tit:"Unità", x:ML+390} ];
+    var righeMat = mats.map(function(r){
+      var n = r.n.trim() || "-";
+      if(n.length > 62) n = n.slice(0, 60) + "...";
+      return [n, r.q.trim() || "-", r.u.trim() || "-"];
+    });
+    tabella(colMat, righeMat, null);
+  }
+
   return d.build();
 }
 
@@ -1007,7 +1117,8 @@ function messaggio(){
     "\nSquadra di " + F.capo + " - " + Object.keys(F.ore).length + " operai" +
     (F.trasferta !== "no" ? "\nTrasferta: " + TRASF[F.trasferta].corto : "") +
     "\nOre: " + fmt(T.ord) + " ordinarie" + (T.str ? " + " + fmt(T.str) + " straordinarie" : "") +
-    (T.km ? "\nKm: " + fmt(T.km) : "");
+    (T.km ? "\nKm: " + fmt(T.km) : "") +
+    (!inLogistica() && materialiCompilati().length ? "\nMateriali usati: " + materialiCompilati().length + " voci" : "");
 }
 
 /* ─────────── CONSEGNA ─────────── */
@@ -1091,6 +1202,7 @@ function creaEConsegna(bottone){
       return;
     }
     scrivi(LS_TRASF, {stato:F.trasferta, data:F.data});
+    ricordaMateriali();
     condividi(blob, nomeFile()).then(function(esito){
       if(bottone){ bottone.disabled = false; bottone.innerHTML = orig; }
       if(esito === "annullato") return;
@@ -1102,7 +1214,36 @@ function creaEConsegna(bottone){
 document.getElementById("crea").addEventListener("click", function(){
   var bottone = this;
   var m = mancanti();
-  if(m.length === 0){ creaEConsegna(bottone); return; }
+  if(m.length === 0){
+    var inc = inLogistica() ? [] : materialiIncompleti();
+    if(!inc.length){ creaEConsegna(bottone); return; }
+    inc.forEach(function(x){
+      var r = document.querySelector('#c_materiali .riga[data-i="' + x.i + '"]');
+      if(r) r.classList.add("incompleta");
+    });
+    apriVelo([
+      el("h3",{text: inc.length === 1 ? "Un materiale è incompleto" : inc.length + " materiali sono incompleti"}),
+      el("div",{class:"aiuto", text:"I materiali non sono obbligatori: puoi completarli o mandare il rapportino così."}),
+      el("ul",{}, inc.map(function(x){
+        return el("li",{class:"giallo", text:x.t, onclick:function(){
+          chiudiVelo();
+          var r = document.querySelector('#c_materiali .riga[data-i="' + x.i + '"]');
+          if(r){ r.scrollIntoView({block:"center"}); }
+        }});
+      })),
+      el("div",{class:"riga2"},[
+        el("button",{class:"grande chiaro", type:"button", text:"Completo", onclick:function(){
+          chiudiVelo();
+          var r = document.querySelector('#c_materiali .riga[data-i="' + inc[0].i + '"]');
+          if(r){ r.scrollIntoView({block:"center"}); }
+        }}),
+        el("button",{class:"grande", type:"button", text:"Mando lo stesso", onclick:function(){
+          chiudiVelo(); creaEConsegna(bottone);
+        }})
+      ])
+    ]);
+    return;
+  }
   evidenzia(m);
   apriVelo([
     el("h3",{text: m.length === 1 ? "Manca una cosa" : "Mancano " + m.length + " cose"}),
